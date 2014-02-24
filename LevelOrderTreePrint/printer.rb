@@ -12,7 +12,7 @@ module BinaryTree
     private
 
     def self.add_child_lines(node, lines, idx)
-      return if node.nil? || (node.left.nil? && node.right.nil?)
+      return if not_printable? node
 
       lines.push([]) if lines.length == idx
 
@@ -23,20 +23,14 @@ module BinaryTree
       add_child_lines(node.right, lines, idx + 1)
     end
 
+    def self.not_printable?(node)
+      node.nil? || (node.left.nil? && node.right.nil?)
+    end
+
     def self.print_lines(lines)
       lines
         .map { |x| x.join(" ") }
         .join("\n")
-    end
-
-    def self.print_children(node)
-      return "" if node.nil? || (node.left.nil? && node.right.nil?)
-      "\n#{print_node(node.left, true)}#{print_node(node.right, false)}" + print_children(node.left)
-    end
-
-    def self.print_node(node, include_space)
-      space = include_space ? " " : ""
-      node.nil? ? "" : (node.value.to_s + space)
     end
   end
 end
